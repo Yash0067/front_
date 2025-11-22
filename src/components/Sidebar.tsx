@@ -90,7 +90,7 @@ export default function Sidebar() {
                 "left-0 top-0 md:top-auto",
                 "pt-16 md:pt-0",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-            )}
+            )}>
                 <div className="p-3 hover:bg-[var(--sidebar-hover)] cursor-pointer transition-colors m-1 rounded-md">
                     <div className="flex items-center gap-2 font-medium text-sm text-[var(--foreground)]">
                         <div className="w-5 h-5 bg-orange-500 rounded text-white flex items-center justify-center text-xs">
