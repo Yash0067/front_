@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Home, Search, Inbox, Settings, ChevronRight, Plus, Sun, Moon, Sparkles, FolderKanban, CheckSquare, FileText, Trash, MoreHorizontal, Database } from 'lucide-react';
+import { Home, Search, Inbox, Settings, ChevronRight, Plus, Sun, Moon, Sparkles, FolderKanban, CheckSquare, FileText, Trash, MoreHorizontal, Database, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useTheme } from './ThemeProvider';
+import { useAuth } from '@/contexts/AuthContext';
 import TemplatesModal from './TemplatesModal';
 import SearchModal from './SearchModal';
 
@@ -23,6 +24,7 @@ export default function Sidebar() {
     const router = useRouter();
     const pathname = usePathname();
     const { theme, setTheme } = useTheme();
+    const { logout, user } = useAuth();
 
     useEffect(() => {
         fetchPages();
@@ -57,6 +59,15 @@ export default function Sidebar() {
             router.push(`/${newPage._id}`);
         } catch (error) {
             console.error('Failed to create page:', error);
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            router.push('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
         }
     };
 
@@ -160,14 +171,24 @@ export default function Sidebar() {
                 </div>
 
                 <div className="p-2 border-t border-[var(--border)]">
+                    <div className="text-xs font-semibold text-gray-500 px-3 py-2">
+                        {user?.name || 'User'}
+                    </div>
                     <div className="flex items-center gap-2 px-3 py-1 text-sm text-gray-500 hover:bg-[var(--sidebar-hover)] rounded cursor-pointer mb-1" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
                         {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                         <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
                     </div>
-                    <Link href="/trash" className="flex items-center gap-2 px-3 py-1 text-sm text-gray-500 hover:bg-[var(--sidebar-hover)] rounded cursor-pointer">
+                    <Link href="/trash" className="flex items-center gap-2 px-3 py-1 text-sm text-gray-500 hover:bg-[var(--sidebar-hover)] rounded cursor-pointer mb-1">
                         <Trash className="w-4 h-4" />
                         <span>Trash</span>
                     </Link>
+                    <button 
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2 px-3 py-1 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded cursor-pointer transition-colors"
+                    >
+                        <LogOut className="w-4 h-4" />
+                        <span>Logout</span>
+                    </button>
                 </div>
             </aside>
 
