@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Search, Inbox, Settings, ChevronRight, Plus, Sun, Moon, Sparkles, FolderKanban, CheckSquare, FileText, Trash, MoreHorizontal, Database, LogOut } from 'lucide-react';
 import Link from 'next/link';
+import { getApiUrl } from '@/lib/api';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useTheme } from './ThemeProvider';
@@ -32,7 +33,8 @@ export default function Sidebar() {
 
     const fetchPages = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/pages');
+            const apiUrl = getApiUrl();
+            const res = await fetch(`${apiUrl}/api/pages`);
             const data = await res.json();
             setPages(data);
         } catch (error) {

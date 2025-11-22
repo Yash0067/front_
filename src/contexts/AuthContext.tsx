@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getApiUrl } from '@/lib/api';
 
 interface User {
     _id: string;
@@ -42,7 +43,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const fetchCurrentUser = async (token: string) => {
         try {
-            const res = await fetch('http://localhost:5000/api/auth/me', {
+            const apiUrl = getApiUrl();
+            const res = await fetch(`${apiUrl}/api/auth/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -65,7 +67,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const login = async (email: string, password: string) => {
-        const res = await fetch('http://localhost:5000/api/auth/login', {
+        const apiUrl = getApiUrl();
+        const res = await fetch(`${apiUrl}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
@@ -84,7 +87,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const register = async (name: string, email: string, password: string) => {
-        const res = await fetch('http://localhost:5000/api/auth/register', {
+        const apiUrl = getApiUrl();
+        const res = await fetch(`${apiUrl}/api/auth/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, email, password }),
@@ -105,7 +109,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = async () => {
         try {
             if (accessToken) {
-                await fetch('http://localhost:5000/api/auth/logout', {
+                const apiUrl = getApiUrl();
+                await fetch(`${apiUrl}/api/auth/logout`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,
@@ -118,6 +123,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setUser(null);
             setAccessToken(null);
             localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+        }
+    };
             localStorage.removeItem('refreshToken');
         }
     };
