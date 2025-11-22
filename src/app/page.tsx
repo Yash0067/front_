@@ -61,3 +61,4 @@ export default function Home() {
 
   // If user exists, show home dashboard
   return <HomeDashboard />;
+}
