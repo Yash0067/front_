@@ -159,20 +159,20 @@ export default function Editor({ pageId }: EditorProps) {
     }
 
     return (
-        <div className="flex h-full">
-            <div className="flex-1 overflow-y-auto">
-                <div className="max-w-3xl mx-auto pt-32 pb-40 px-12 relative">
+        <div className="flex flex-col md:flex-row h-full w-full">
+            <div className="flex-1 overflow-y-auto w-full">
+                <div className="max-w-3xl mx-auto pt-20 md:pt-32 pb-40 px-4 md:px-12 relative">
                     {/* Share Button */}
-                    <div className="absolute top-8 right-12 flex gap-2">
+                    <div className="absolute top-4 md:top-8 right-4 md:right-12 flex gap-2 z-10">
                         <div className="relative">
                             <button
                                 onClick={() => setShowShare(!showShare)}
-                                className={`text-sm text-gray-500 hover:bg-gray-100 px-3 py-1 rounded transition-colors ${showShare ? 'bg-gray-100' : ''}`}
+                                className={`text-sm text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-900 px-3 py-1 rounded transition-colors ${showShare ? 'bg-gray-100 dark:bg-gray-900' : ''}`}
                             >
                                 Share
                             </button>
                             {showShare && (
-                                <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-[#202020] border border-[var(--border)] rounded-md shadow-lg p-4 z-10">
+                                <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-[#202020] border border-[var(--border)] rounded-md shadow-lg p-4 z-10 max-w-sm">
                                     <div className="flex items-center justify-between mb-4">
                                         <span className="text-sm font-medium">Share to web</span>
                                         <button
@@ -183,15 +183,15 @@ export default function Editor({ pageId }: EditorProps) {
                                         </button>
                                     </div>
                                     {page.isPublic && (
-                                        <div className="flex gap-2">
+                                        <div className="flex flex-col gap-2">
                                             <input
                                                 readOnly
                                                 value={window.location.href}
-                                                className="text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded flex-1 truncate"
+                                                className="text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded w-full truncate"
                                             />
                                             <button
                                                 onClick={copyLink}
-                                                className="text-xs bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                                                className="text-xs bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 w-full"
                                             >
                                                 Copy
                                             </button>
@@ -239,7 +239,7 @@ export default function Editor({ pageId }: EditorProps) {
                         value={page.title}
                         onChange={handleTitleChange}
                         placeholder="Untitled"
-                        className="w-full text-4xl font-bold text-[var(--foreground)] bg-transparent border-none outline-none resize-none placeholder:text-gray-300 overflow-hidden mb-8"
+                        className="w-full text-2xl md:text-4xl font-bold text-[var(--foreground)] bg-transparent border-none outline-none resize-none placeholder:text-gray-300 overflow-hidden mb-8"
                         rows={1}
                         style={{ height: 'auto' }}
                     />

@@ -16,14 +16,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="flex h-screen overflow-hidden bg-[var(--background)]">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      </head>
+      <body className="flex flex-col md:flex-row h-screen overflow-hidden bg-[var(--background)]">
         <ThemeProvider
           defaultTheme="system"
           storageKey="flux-theme"
         >
           <AuthProvider>
             <Sidebar />
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto w-full">
               {children}
             </main>
           </AuthProvider>

@@ -19,6 +19,7 @@ export default function Sidebar() {
     const [pages, setPages] = useState<Page[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const { theme, setTheme } = useTheme();
@@ -61,7 +62,35 @@ export default function Sidebar() {
 
     return (
         <>
-            <aside className="w-60 bg-[var(--sidebar-bg)] h-screen flex flex-col border-r border-[var(--border)] transition-colors duration-300 group/sidebar">
+            {/* Mobile menu button */}
+            <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[var(--sidebar-bg)] border-b border-[var(--border)] flex items-center px-4 z-50">
+                <button
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="p-2 hover:bg-[var(--sidebar-hover)] rounded transition-colors"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <span className="ml-3 font-medium truncate">Flux</span>
+            </div>
+
+            {/* Overlay for mobile */}
+            {isSidebarOpen && (
+                <div
+                    className="md:hidden fixed inset-0 bg-black/50 z-30"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
+            {/* Sidebar */}
+            <aside className={cn(
+                "w-60 bg-[var(--sidebar-bg)] h-screen flex flex-col border-r border-[var(--border)] transition-colors duration-300 group/sidebar",
+                "fixed md:relative z-40 md:z-auto",
+                "left-0 top-0 md:top-auto",
+                "pt-16 md:pt-0",
+                isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+            )}
                 <div className="p-3 hover:bg-[var(--sidebar-hover)] cursor-pointer transition-colors m-1 rounded-md">
                     <div className="flex items-center gap-2 font-medium text-sm text-[var(--foreground)]">
                         <div className="w-5 h-5 bg-orange-500 rounded text-white flex items-center justify-center text-xs">

@@ -146,29 +146,31 @@ export default function ProjectsPage() {
     }
 
     return (
-        <div className="p-8">
-            <div className="flex items-center justify-between mb-8">
-                <h1 className="text-3xl font-bold">Projects</h1>
+        <div className="p-4 md:p-8 min-h-screen bg-[var(--background)]">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+                <h1 className="text-2xl md:text-3xl font-bold">Projects</h1>
                 <button
                     onClick={() => setShowCreateModal(true)}
-                    className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                    className="w-full md:w-auto flex items-center justify-center md:justify-start gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
                 >
                     <Plus className="w-4 h-4" />
                     New Project
                 </button>
             </div>
 
-            <AdvancedFilter
-                onFilterChange={setFilters}
-                filterOptions={[
-                    { id: 'title', label: 'Project name', icon: <ListChecks className="w-4 h-4" />, type: 'text' },
-                    { id: 'assignee', label: 'Assignee', icon: <User className="w-4 h-4" />, type: 'text' },
-                    { id: 'status', label: 'Status', icon: <ListChecks className="w-4 h-4" />, type: 'select', options: ['planning', 'active', 'completed', 'archived'] },
-                    { id: 'priority', label: 'Priority', icon: <ListChecks className="w-4 h-4" />, type: 'select', options: ['low', 'medium', 'high', 'urgent'] },
-                ]}
-            />
+            <div className="mb-6 overflow-x-auto">
+                <AdvancedFilter
+                    onFilterChange={setFilters}
+                    filterOptions={[
+                        { id: 'title', label: 'Project name', icon: <ListChecks className="w-4 h-4" />, type: 'text' },
+                        { id: 'assignee', label: 'Assignee', icon: <User className="w-4 h-4" />, type: 'text' },
+                        { id: 'status', label: 'Status', icon: <ListChecks className="w-4 h-4" />, type: 'select', options: ['planning', 'active', 'completed', 'archived'] },
+                        { id: 'priority', label: 'Priority', icon: <ListChecks className="w-4 h-4" />, type: 'select', options: ['low', 'medium', 'high', 'urgent'] },
+                    ]}
+                />
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredProjects.map((project) => (
                     <div
                         key={project._id}

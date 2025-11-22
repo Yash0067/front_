@@ -40,23 +40,24 @@ export default function HomeDashboard() {
     };
 
     return (
-        <div className="max-w-5xl mx-auto pt-20 px-12 relative">
+        <div className="min-h-screen bg-[var(--background)] pt-20 md:pt-0">
+            <div className="max-w-5xl mx-auto px-4 md:px-12 py-8 md:py-20 relative">
             {/* New Button - Top Right */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 right-4 md:top-4 md:right-4">
                 <div className="relative">
                     <button
                         onClick={() => setShowNewMenu(!showNewMenu)}
-                        className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
+                        className="flex items-center gap-2 bg-blue-500 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors shadow-sm text-sm md:text-base"
                     >
                         <Plus className="w-4 h-4" />
-                        New
-                        <ChevronDown className="w-4 h-4" />
+                        <span className="hidden md:inline">New</span>
+                        <ChevronDown className="w-4 h-4 hidden md:inline" />
                     </button>
 
                     {showNewMenu && (
                         <>
                             <div className="fixed inset-0 z-10" onClick={() => setShowNewMenu(false)} />
-                            <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-[#202020] border border-[var(--border)] rounded-xl shadow-xl z-20 overflow-hidden">
+                            <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-[#202020] border border-[var(--border)] rounded-xl shadow-xl z-20 overflow-hidden max-h-96 overflow-y-auto">
                                 <div className="p-2">
                                     <button
                                         onClick={() => {
@@ -104,10 +105,10 @@ export default function HomeDashboard() {
                 </div>
             </div>
 
-            <h1 className="text-3xl font-bold mb-8 text-center">{greeting}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold mb-8 text-center mt-20 md:mt-0">{greeting}</h1>
 
             {/* Quick Actions / AI Promo */}
-            <div className="bg-white dark:bg-[#202020] border border-[var(--border)] rounded-xl p-6 mb-12 shadow-sm flex items-center justify-between">
+            <div className="bg-white dark:bg-[#202020] border border-[var(--border)] rounded-xl p-4 md:p-6 mb-12 shadow-sm flex flex-col md:flex-row items-center md:justify-between gap-4">
                 <div>
                     <h3 className="font-semibold text-lg mb-1">Looking for Flux AI?</h3>
                     <p className="text-sm text-gray-500 mb-4">Try full-page Flux AI from the sidebar</p>
@@ -115,7 +116,7 @@ export default function HomeDashboard() {
                         Try it
                     </button>
                 </div>
-                <div className="hidden sm:block">
+                <div className="hidden md:block">
                     {/* Visual placeholder for the AI tooltip in screenshot */}
                     <div className="flex items-center gap-4 bg-gray-50 dark:bg-[#252525] p-4 rounded-lg border border-[var(--border)]">
                         <div className="flex flex-col gap-2 text-sm text-gray-500">
@@ -204,6 +205,7 @@ export default function HomeDashboard() {
                     </div>
                 </div>
             </section>
+        </div>
         </div>
     );
 }
