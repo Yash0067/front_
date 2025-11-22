@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import LayoutWrapper from "./layout-wrapper";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -19,16 +19,15 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
-      <body className="flex flex-col md:flex-row h-screen overflow-hidden bg-[var(--background)]">
+      <body className="bg-[var(--background)]">
         <ThemeProvider
           defaultTheme="system"
           storageKey="flux-theme"
         >
           <AuthProvider>
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto w-full">
+            <LayoutWrapper>
               {children}
-            </main>
+            </LayoutWrapper>
           </AuthProvider>
         </ThemeProvider>
       </body>
