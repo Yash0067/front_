@@ -132,9 +132,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             localStorage.removeItem('refreshToken');
         }
     };
-            localStorage.removeItem('refreshToken');
-        }
-    };
 
     return (
         <AuthContext.Provider value={{ user, accessToken, login, register, logout, loading }}>
