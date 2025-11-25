@@ -125,12 +125,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
         } catch (error) {
             console.error('Logout error:', error);
-        } finally {
-            setUser(null);
-            setAccessToken(null);
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
         }
+        
+        setUser(null);
+        setAccessToken(null);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
     };
 
     return (
