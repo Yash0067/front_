@@ -9,13 +9,19 @@ import Link from 'next/link';
 export default function Home() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [shouldRedirect, setShouldRedirect] = React.useState(false);
 
   useEffect(() => {
-    // Redirect to signup/login if not authenticated after loading
-    if (!loading && !user) {
-      router.push('/register');
+    // Only redirect once loading is complete and user is confirmed null
+    if (!loading && !user && shouldRedirect === false) {
+      setShouldRedirect(true);
+      // Use a small delay to ensure state updates complete
+      const timer = setTimeout(() => {
+        router.push('/register');
+      }, 100);
+      return () => clearTimeout(timer);
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, shouldRedirect]);
 
   if (loading) {
     return (

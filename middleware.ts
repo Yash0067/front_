@@ -3,25 +3,21 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     
-    // Get the token from localStorage (client-side) or cookies
-    const token = request.cookies.get('accessToken')?.value;
-
-    // Define public routes that don't require authentication
-    const publicRoutes = ['/login', '/register', '/'];
-
-    // Define protected routes that require authentication
-    const protectedRoutes = ['/', '/projects', '/inbox', '/trash', '/tasks'];
-
-    // If user is authenticated and tries to access login/register, redirect to home
-    if (token && (pathname === '/login' || pathname === '/register')) {
-        return NextResponse.redirect(new URL('/', request.url));
+    // Public routes that don't require authentication
+    const publicRoutes = ['/login', '/register'];
+    
+    // Check if current path is a public route
+    const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route));
+    
+    // If accessing public routes, allow access
+    if (isPublicRoute) {
+        return NextResponse.next();
     }
-
-    // If user is not authenticated and tries to access protected routes, redirect to login
-    if (!token && protectedRoutes.some(route => pathname.startsWith(route)) && pathname !== '/') {
-        return NextResponse.redirect(new URL('/login', request.url));
-    }
-
+    
+    // For protected routes, we can't check localStorage here (server-side)
+    // So we allow access and let the client-side auth context handle redirects
+    // This prevents infinite redirect loops at the middleware level
+    
     return NextResponse.next();
 }
 

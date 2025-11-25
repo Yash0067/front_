@@ -44,6 +44,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const fetchCurrentUser = async (token: string) => {
         try {
             const apiUrl = getApiUrl();
+            if (!apiUrl) {
+                console.warn('API URL not configured');
+                setLoading(false);
+                return;
+            }
+            
             const res = await fetch(`${apiUrl}/api/auth/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
